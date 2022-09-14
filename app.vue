@@ -1,24 +1,10 @@
 <script setup lang="ts">
-
-const {data: todos, refresh} = useAsyncData("todo", () => {
-  return $fetch("api/todo");
-})
-
 const input = ref("")
+const {todos, addTodo, updateTodo, deleteTodo} = useTodos();
 
-const addToDo = async () => {
-  if(!input) return;
-  await $fetch("/api/todo", {method: "POST", body: { item: input.value }});
-  refresh()
-};
-const updateTodo = async (id) => {
-  await $fetch(`/api/todo/${id}`, {method: "PUT", });
-  refresh()
-}
-
-const deleteTodo = async (id) => {
-  await $fetch(`/api/todo/${id}`, {method: "DELETE", });
-  refresh()
+const handleClick = () => {
+  addTodo(input.value);
+  input.value = ""
 }
 </script>
 
@@ -28,7 +14,7 @@ const deleteTodo = async (id) => {
      <h1>My To-Dos</h1>
       <div class="add-todo">
         <input type="text" placeholder="Add a new to-do" v-model="input"  />
-        <NButton @click="addToDo">Add</NButton>
+        <NButton @click="handleClick">Add</NButton>
       </div>
 
       <NCard

@@ -6,6 +6,6 @@ node_modules
 .output
 .env
 dist
-schema.json
-pha.json
+.schema.json
+.pha.json
 
